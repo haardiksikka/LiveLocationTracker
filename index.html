@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body onload="getLocation()">
+
+<p>Location Tracker</p>
+
+<p id="demo"></p>
+
+<script type="text/javascript">
+
+function getLocation() {
+	console.log("ene");
+  if (navigator.geolocation) {
+	//console.log(navigator.geolocation.)
+    navigator.geolocation.watchPosition(showPosition, onError);
+  } else { 
+    console.log("Geolocation is not supported by this browser.");
+  }
+}
+   
+
+ function onError(err){
+	console.log(err);
+} 
+function showPosition(position) {
+console.log("enetring..", position);
+    var xhttp = new XMLHttpRequest();
+ 
+  const loc = {"latitude":position.coords.latitude, "longitude":position.coords.longitude, "speed":position.coords.speed, "user":"hsikka"}
+  
+  xhttp.open("POST", "http://localhost:8080/producer", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+
+  xhttp.send(JSON.stringify(loc));
+}
+</script>
+
+</body>
+</html>
